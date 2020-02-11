@@ -4,14 +4,29 @@
     ViewData["Title"] = "Create";
 }
 
-    <div id="modal-placeholder"></div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        <h4>Новая модель</h4>
+
+        @Html.ValidationSummary(true)
+        <div>
+            @Html.LabelFor(model => model.PositionName)
+            <div>
+                @Html.EditorFor(model => model.PositionName)
+                @Html.ValidationMessageFor(model => model.PositionName, "")
+            </div>
+        </div>
+    </div>
+}
 
 @*<h1>Создать</h1>
-
 <h4>Должность</h4>
 <hr />
 <div class="row">
-    <div >
+    <div>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -20,7 +35,7 @@
                 <span asp-validation-for="PositionName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit"  data-save="modal" value="Создать" class="btn btn-primary" />
+                <input type="submit" data-save="modal" value="Создать" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -30,32 +45,32 @@
     <a asp-action="Index">Назад к списку</a>
 </div>*@
 
-<div class="modal fade" id="add-contact" tabindex="-1" role="dialog" aria-labelledby="addContactLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addContactLabel">Добавить должность</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form asp-action="Create">
-                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
-                    <div class="form-group">
-                        <label asp-for="PositionName" class="control-label"></label>
-                        <input asp-for="PositionName" class="form-control" />
-                        <span asp-validation-for="PositionName" class="text-danger"></span>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary" data-save="modal">Сохранить</button>
+@*<div class="modal fade" id="add-contact" tabindex="-1" role="dialog" aria-labelledby="addContactLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addContactLabel">Добавить должность</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="Create">
+                        <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                        <div class="form-group">
+                            <label asp-for="PositionName" class="control-label"></label>
+                            <input asp-for="PositionName" class="form-control" />
+                            <span asp-validation-for="PositionName" class="text-danger"></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" data-save="modal">Сохранить</button>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>*@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

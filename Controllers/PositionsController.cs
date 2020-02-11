@@ -56,10 +56,10 @@ namespace PatientCardsITC.Controllers
             {
                 _context.Add(position);
                 await _context.SaveChangesAsync();
-                return View();
+                return PartialView("Success");
                 //return RedirectToAction(nameof(Index));
             }
-            return PartialView("Create", position);
+            return PartialView(position);
         }
 
         // GET: Positions/Edit/5
@@ -94,6 +94,8 @@ namespace PatientCardsITC.Controllers
                 {
                     _context.Update(position);
                     await _context.SaveChangesAsync();
+                    ViewData["Message"] = "Данные успешно изменены";
+                    return View();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -106,7 +108,6 @@ namespace PatientCardsITC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(position);
         }

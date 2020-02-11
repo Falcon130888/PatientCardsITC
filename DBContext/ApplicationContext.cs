@@ -16,7 +16,8 @@ namespace PatientCardsITC.DBContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=PatientCards;Username=postgres;Password=2030");
+                 optionsBuilder.UseSqlServer("data source=STAS;initial catalog=PatientCards; Integrated Security=True");
+            //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=PatientCards;Username=postgres;Password=2030");
         }
     }
 }

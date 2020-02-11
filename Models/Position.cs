@@ -12,7 +12,7 @@ namespace PatientCardsITC.Models
         public int PositionId { get; set; }
 
         [Display(Name = "Должность")]
-        [Required(ErrorMessage = "Поле должность пусто")]
+        [Required(ErrorMessage = "Не заполнено поле должность")]
         [RegularExpression(@"^[А-Я]+[а-яА-Я""'\s-]*$", ErrorMessage = "Название должности должно содержать только буквы кирилицы"), StringLength(30)]
         public string PositionName { get; set; }
 
