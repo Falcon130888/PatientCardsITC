@@ -11,8 +11,10 @@ namespace PatientCardsITC.Models
         [Key]
         public int PositionId { get; set; }
 
-        [Display(Name = "должность")]
-        public string PostionName { get; set; }
+        [Display(Name = "Должность")]
+        [Required(ErrorMessage = "Поле должность пусто")]
+        [RegularExpression(@"^[А-Я]+[а-яА-Я""'\s-]*$", ErrorMessage = "Название должности должно содержать только буквы кирилицы"), StringLength(30)]
+        public string PositionName { get; set; }
 
         public IEnumerable<Doctor> Doctors { get; }
     }

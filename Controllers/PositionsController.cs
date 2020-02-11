@@ -45,21 +45,21 @@ namespace PatientCardsITC.Controllers
         // GET: Positions/Create
         public IActionResult Create()
         {
-            return PartialView("Create");
-            //return View();
+            return PartialView();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PositionId,PostionName")] Position position)
+        public async Task<IActionResult> Create([Bind("PositionId,PositionName")] Position position)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(position);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View();
+                //return RedirectToAction(nameof(Index));
             }
-            return View(position);
+            return PartialView("Create", position);
         }
 
         // GET: Positions/Edit/5
@@ -81,7 +81,7 @@ namespace PatientCardsITC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PositionId,PostionName")] Position position)
+        public async Task<IActionResult> Edit(int id, [Bind("PositionId,PositionName")] Position position)
         {
             if (id != position.PositionId)
             {

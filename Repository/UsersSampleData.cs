@@ -16,23 +16,23 @@ namespace PatientCardsITC.Repository
                 context.Positions.AddRange(
                     new Position
                     {
-                        PostionName = "Терапевт",
+                        PositionName = "Терапевт",
                     },
                     new Position
                     {
-                        PostionName = "Лор",
+                        PositionName = "Лор",
                     },
                     new Position
                     {
-                        PostionName = "Кардиолог",
+                        PositionName = "Кардиолог",
                     },
                     new Position
                     {
-                        PostionName = "Хирург",
+                        PositionName = "Хирург",
                     },
                     new Position
                     {
-                        PostionName = "Стоматолог",
+                        PositionName = "Стоматолог",
                     }
                 );
                 context.SaveChanges();

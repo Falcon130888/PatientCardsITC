@@ -9,18 +9,18 @@ namespace PatientCardsITC.Models
         [Key]
         public int PatientId { get; set; }
 
-        [Display(Name = "ИИН пациента")]
+        [Display(Name = "ИИН")]
         [RegularExpression(@" ^ (\d{10})$", ErrorMessage = "ИИН должен содержать только цифры")]
         public string IIN { get; set; }
 
-        [Display(Name = "ФИО пациента")]
+        [Display(Name = "ФИО")]
         public string FIO { get; set; }
 
         [Display(Name = "Адрес проживания")]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Вы должны ввести номер телефона")]
-        [Display(Name = "Контактный номер пациента")]
+        [Display(Name = "Контактный номер")]
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Номер телефона введен неверно")]
         public string PhoneNumber { get; set; }
