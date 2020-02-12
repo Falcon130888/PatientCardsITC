@@ -1,0 +1,127 @@
+﻿@model IEnumerable<PatientCardsITC.Models.History>
+
+@{
+    ViewData["Title"] = "Посещения";
+}
+
+<h1>Посещения</h1>
+
+<p> @Html.ActionLink("Добавить посещение", "Create", "Histories", new { }, new { @id = "add", data_dialog_title = "Новое посещение" })</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Patient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Position)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diagnos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Complain)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisitDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Patient.FIO)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position.PositionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doctor.FIO)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Diagnos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Complain)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VisitDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="viewDialog" asp-route-id="@item.HistoryId">Изменить</a> |
+                    <a asp-action="Details" class="viewDialog" asp-route-id="@item.HistoryId">Детали</a> |
+                    <a asp-action="Delete" class="viewDialog" asp-route-id="@item.HistoryId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts {
+    <script>
+   $(document).ready(function () {
+        $.ajaxSetup({ cache: false });
+           $(".viewDialog").on("click", function (e) {
+        e.preventDefault();
+
+        $("<div></div>")
+            .addClass("dialog")
+            .appendTo("body")
+            .dialog({
+                title: $(this).attr("data-dialog-title"),
+                close: function () { $(this).remove() },
+                modal: true
+            })
+            .load(this.href);
+           });
+
+       $('#add').on('click', function(e) {
+            e.preventDefault();
+            $("<div id='dialogContent'></div>")
+                .addClass("dialog")
+                .appendTo("body")
+                .load(this.href)
+                .dialog({
+                    title: $(this).attr("data-dialog-title"),
+                    close: function () { $(this).remove() },
+                    modal: false,
+                    buttons: {
+                        "Выпонить": function () {
+                            $.ajax({
+                             url: "@Url.Action("Create", "Histories")",
+                             type: "POST",
+                             data: $('form').serialize(),
+                             datatype: "json",
+                             success: function (result) {
+                                 $("#dialogContent").html(result);
+                                }
+                            });
+                        }
+                    }
+                });
+       });
+   });
+$(function () {
+// Заполняем таблицу должностей по IdOtdel
+    $('#positions').change(function()
+            {
+                // получаем выбранный id
+                var id = $(this).val();
+                $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetItems")/' + id,
+                success: function (data) {
+                    // заменяем содержимое присланным частичным представлением
+                    $('#doctors').replaceWith(data);
+            }
+        });
+    });
+})
+    </script>
+}

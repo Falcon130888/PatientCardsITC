@@ -5,13 +5,8 @@
 }
 <h1>Должности</h1>
 
-<div id="modal-placeholder"></div>
-<div id="createForm"></div>
 <p> @Html.ActionLink("Добавить", "Create", "Positions", new { }, new { @id = "add", data_dialog_title = "Создание модели" })</p>
 
-@*<button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-contact" data-url="@Url.Action("Create")">
-    Добавить должность
-</button>*@
 <table class="table">
     <thead>
         <tr>
@@ -29,10 +24,7 @@
                     @Html.DisplayFor(modelItem => item.PositionName)
                 </td>
                 <td>
-                    <button type="button" class="btn-link" data-toggle="ajax-modal" data-target="#add-contact" data-url="@Url.Action("Edit", "Positions", new { id = @item.PositionId}) ">
-                        Изменить
-                    </button>
-                    <a asp-action="Edit" class="viewDialog" asp-route-id="@item.PositionId">Изменить</a> |
+                    <a asp-action="Edit" class="viewDialog" asp-route-id="@item.PositionId" )'>Изменить</a> |
                     <a asp-action="Details" class="viewDialog" asp-route-id="@item.PositionId">Детали</a> |
                     <a asp-action="Delete" class="viewDialog" asp-route-id="@item.PositionId">Удалить</a>
                 </td>
@@ -43,8 +35,21 @@
 @section scripts{
     <script>
    $(document).ready(function () {
-
         $.ajaxSetup({ cache: false });
+
+           $(".viewDialog").on("click", function (e) {
+        e.preventDefault();
+
+        $("<div></div>")
+            .addClass("dialog")
+            .appendTo("body")
+            .dialog({
+                title: $(this).attr("data-dialog-title"),
+                close: function () { $(this).remove() },
+                modal: true
+            })
+            .load(this.href);
+           });
 
        $('#add').on('click', function(e) {
             e.preventDefault();
@@ -72,20 +77,6 @@
                     }
                 });
        });
-
-           $(".viewDialog").on("click", function (e) {
-        e.preventDefault();
-
-        $("<div></div>")
-            .addClass("dialog")
-            .appendTo("body")
-            .dialog({
-                title: $(this).attr("data-dialog-title"),
-                close: function () { $(this).remove() },
-                modal: true
-            })
-            .load(this.href);
-    });
-    });
+   });
     </script>
 }

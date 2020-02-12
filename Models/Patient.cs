@@ -10,19 +10,22 @@ namespace PatientCardsITC.Models
         public int PatientId { get; set; }
 
         [Display(Name = "ИИН")]
-        [RegularExpression(@" ^ (\d{10})$", ErrorMessage = "ИИН должен содержать только цифры")]
+        [Required(ErrorMessage = "Не заполнено ИИН")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "ИИН должен содержать только цифры")]
         public string IIN { get; set; }
 
         [Display(Name = "ФИО")]
+        [Required(ErrorMessage = "Не заполнено поле ФИО")]
         public string FIO { get; set; }
 
         [Display(Name = "Адрес проживания")]
+        [Required(ErrorMessage = "Не заполнен адрес проживания")]
         public string Address { get; set; }
 
-        [Required(ErrorMessage = "Вы должны ввести номер телефона")]
+        [Required(ErrorMessage = "Не заполнен номер телефона")]
         [Display(Name = "Контактный номер")]
-        [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Номер телефона введен неверно")]
+        [Phone]
+        //[RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Номер телефона введен неверно")]
         public string PhoneNumber { get; set; }
     }
 }

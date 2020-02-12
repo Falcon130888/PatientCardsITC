@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace PatientCardsITC.Migrations
 {
-    public partial class PatientCards : Migration
+    public partial class New : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,7 @@ namespace PatientCardsITC.Migrations
                 {
                     PositionId = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PostionName = table.Column<string>(nullable: true)
+                    PositionName = table.Column<string>(maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {

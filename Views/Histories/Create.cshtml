@@ -1,0 +1,62 @@
+﻿@model PatientCardsITC.Models.History
+@{
+    ViewData["Title"] = "Create";
+    Layout = null;
+}
+
+<script type="text/javascript">
+        $(function () {
+        // Заполняем таблицу должностей по IdOtdel
+        $('#positions').change(function()
+        {
+            // получаем выбранный id
+            var id = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetItems")/' + id,
+                success: function (data) {
+                    // заменяем содержимое присланным частичным представлением
+                    $('#doctors').replaceWith(data);
+                }
+            });
+        });
+        })
+    $('.select2').select2();
+</script>
+
+<h4>Добавление посещения</h4>
+<hr />
+<div class="row">
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                ФИО пациента
+                <select asp-for="PatientId" class="form-control select2" asp-items="ViewBag.PatientId"></select>
+            </div>
+            <div class="form-group">
+                Специализация врача
+                <select id="positions" asp-for="PositionId" class="form-control" asp-items="ViewBag.PositionId"></select>
+            </div>
+            <div class="form-group">
+                ФИО врача
+                <select id="doctors" asp-for="DoctorId" class="form-control" asp-items="ViewBag.DoctorId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Diagnos" class="control-label"></label>
+                <input asp-for="Diagnos" class="form-control" />
+                <span asp-validation-for="Diagnos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Complain" class="control-label"></label>
+                <input asp-for="Complain" class="form-control" />
+                <span asp-validation-for="Complain" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VisitDate" class="control-label"></label>
+                <input asp-for="VisitDate" class="form-control" />
+                <span asp-validation-for="VisitDate" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>

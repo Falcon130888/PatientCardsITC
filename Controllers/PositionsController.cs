@@ -95,7 +95,7 @@ namespace PatientCardsITC.Controllers
                     _context.Update(position);
                     await _context.SaveChangesAsync();
                     ViewData["Message"] = "Данные успешно изменены";
-                    return View();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {

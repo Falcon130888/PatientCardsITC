@@ -1,0 +1,39 @@
+﻿@model PatientCardsITC.Models.Patient
+
+@{
+    ViewData["Title"] = "Детали";
+    Layout = null;
+}
+<div>
+    <h4>Детали</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.IIN)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.IIN)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.FIO)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.FIO)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class = "col-sm-8">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PatientId">Изменить</a> 
+</div>

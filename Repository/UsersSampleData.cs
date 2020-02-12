@@ -85,24 +85,59 @@ namespace PatientCardsITC.Repository
                         IIN = "910928301083",
                         FIO = "Нейфельд Станислав Викторович",
                         Address = "Букетова 42, кв 32",
-                        PhoneNumber = "8(777)9784307"
+                        PhoneNumber = "8(777)9784307",
                     },
                     new Patient
                     {
                         IIN = "190640006862",
                         FIO = "Тамимова Гульмира Бакытбековна",
                         Address = "Ауэзова 147, кв 28",
-                        PhoneNumber = "8(777)9784307"
+                        PhoneNumber = "8(777)9784307",
                     },
                     new Patient
                     {
                         IIN = "200140023083",
                         FIO = "Скакова Улжан Каспаметовна",
                         Address = "Абая 25, кв 40",
-                        PhoneNumber = "8(777)9784307"
+                        PhoneNumber = "8(777)9784307",
                     }
                     );
-                }
+                context.SaveChanges();
+            }
+
+            if (!context.Histories.Any())
+            {
+                context.Histories.AddRange(
+                   new History
+                   {
+                       PatientId = 1,
+                       PositionId = 1,
+                       DoctorId = 1,
+                       Diagnos = "простуда",
+                       Complain = "температура",
+                       VisitDate = DateTime.Now
+                   },
+                    new History
+                    {
+                        PatientId = 2,
+                        PositionId = 2,
+                        DoctorId = 2,
+                        Diagnos = "грыжа",
+                        Complain = "боль в животе",
+                        VisitDate = DateTime.Now
+                    },
+                    new History
+                    {
+                        PatientId = 3,
+                        PositionId = 3,
+                        DoctorId = 3,
+                        Diagnos = "воспаление уха",
+                        Complain = "боль в ухе",
+                        VisitDate = DateTime.Now
+                    }
+                    );
+                context.SaveChanges();
+            }
             }
         }
     }

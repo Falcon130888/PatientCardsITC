@@ -9,8 +9,8 @@ using PatientCardsITC.DBContext;
 namespace PatientCardsITC.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200210093401_PatientCards")]
-    partial class PatientCards
+    [Migration("20200212072450_New")]
+    partial class New
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,8 +72,10 @@ namespace PatientCardsITC.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("PostionName")
-                        .HasColumnType("text");
+                    b.Property<string>("PositionName")
+                        .IsRequired()
+                        .HasColumnType("character varying(30)")
+                        .HasMaxLength(30);
 
                     b.HasKey("PositionId");
 

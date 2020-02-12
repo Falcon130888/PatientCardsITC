@@ -1,20 +1,26 @@
-﻿@model IEnumerable<PatientCardsITC.Models.Doctor>
+﻿@model IEnumerable<PatientCardsITC.Models.Patient>
 
 @{
-    ViewData["Title"] = "Доктора";
+    ViewData["Title"] = "Пациенты";
 }
 
-<h1>Доктора</h1>
+<h1>Пациенты</h1>
 
-<p> @Html.ActionLink("Добавить", "Create", "Doctors", new { }, new { @id = "add", data_dialog_title = "Создание модели" })</p>
+<p> @Html.ActionLink("Добавить", "Create", "Patients", new { }, new { @id = "add", data_dialog_title = "Создание модели" })</p>
 <table class="table">
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.IIN)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FIO)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Position.PositionName)
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
             <th></th>
         </tr>
@@ -24,15 +30,21 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.IIN)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.FIO)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Position.PositionName)
+                    @Html.DisplayFor(modelItem => item.Address)
                 </td>
                 <td>
-                    <a asp-action="Edit" class="viewDialog" asp-route-id="@item.DoctorId">Изменить</a> |
-                    <a asp-action="Details"class="viewDialog" asp-route-id="@item.DoctorId">Детали</a> |
-                    <a asp-action="Delete" class="viewDialog" asp-route-id="@item.DoctorId">Удалить</a>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="viewDialog" asp-route-id="@item.PatientId">Изменить</a> |
+                    <a asp-action="Details" class="viewDialog" asp-route-id="@item.PatientId">Детали</a> |
+                    <a asp-action="Delete" class="viewDialog" asp-route-id="@item.PatientId">Удалить</a>
                 </td>
             </tr>
         }
@@ -71,7 +83,7 @@
                     buttons: {
                         "Выпонить": function () {
                             $.ajax({
-                             url: "@Url.Action("Create", "Doctors")",
+                             url: "@Url.Action("Create", "Patients")",
                              type: "POST",
                              data: $('form').serialize(),
                              datatype: "json",

@@ -10,11 +10,11 @@ namespace PatientCardsITC.Models
         [Key]
         public int DoctorId { get; set; }
 
+        [Required(ErrorMessage = "Не заполнено ФИО")]
         [Display(Name = "ФИО доктора")]
         public string FIO { get; set; }
 
         public int PositionId { get; set; }
-
         [ForeignKey("PositionId")]
         public Position Position { get; set; }
     }
