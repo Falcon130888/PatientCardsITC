@@ -21,7 +21,7 @@ namespace PatientCardsITC.Models
         // GET: Histories
         public async Task<IActionResult> Index()
         {
-            var applicationContext = _context.Histories.Include(h => h.Doctor).Include(h => h.Patient).Include(h => h.Position);
+            var applicationContext = _context.Histories.Include(h => h.Doctor).Include(h => h.Patient).Include(h => h.Position).OrderByDescending( m => m.VisitDate);
             return View(await applicationContext.ToListAsync());
         }
 
@@ -49,9 +49,10 @@ namespace PatientCardsITC.Models
         // GET: Histories/Create
         public IActionResult Create()
         {
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "DoctorId", "FIO");
-            ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FIO");
-            ViewData["PositionId"] = new SelectList(_context.Positions, "PositionId", "PositionName");
+            int selectedIndex = _context.Positions.First().PositionId;
+            ViewData["DoctorId"] = new SelectList(_context.Doctors.Where(c => c.PositionId == selectedIndex).OrderBy( c => c.FIO), "DoctorId", "FIO");
+            ViewData["PatientId"] = new SelectList(_context.Patients.OrderBy(c => c.FIO), "PatientId", "FIO");
+            ViewData["PositionId"] = new SelectList(_context.Positions, "PositionId", "PositionName", selectedIndex);
             return View();
         }
 
@@ -66,7 +67,8 @@ namespace PatientCardsITC.Models
             {
                 _context.Add(history);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return PartialView("Success");
+                //return RedirectToAction(nameof(Index));
             }
             ViewData["DoctorId"] = new SelectList(_context.Doctors, "DoctorId", "FIO", history.DoctorId);
             ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FIO", history.PatientId);
@@ -87,9 +89,9 @@ namespace PatientCardsITC.Models
             {
                 return NotFound();
             }
-            ViewData["DoctorId"] = new SelectList(_context.Doctors, "DoctorId", "FIO", history.DoctorId);
-            ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FIO", history.PatientId);
-            ViewData["PositionId"] = new SelectList(_context.Positions, "PositionId", "PositionName", history.PositionId);
+            ViewData["DoctorId"] = new SelectList(_context.Doctors.OrderBy(c => c.FIO), "DoctorId", "FIO", history.DoctorId);
+            ViewData["PatientId"] = new SelectList(_context.Patients.OrderBy(c => c.FIO), "PatientId", "FIO", history.PatientId);
+            ViewData["PositionId"] = new SelectList(_context.Positions.OrderBy(c => c.PositionName), "PositionId", "PositionName", history.PositionId);
             return View(history);
         }
 
@@ -166,6 +168,60 @@ namespace PatientCardsITC.Models
         private bool HistoryExists(int id)
         {
             return _context.Histories.Any(e => e.HistoryId == id);
+        }
+
+        public ActionResult GetHistories(string id, string IIN)
+        {
+            IEnumerable<History> Histories;
+
+            if (IIN != null){
+                Histories = _context.Histories
+   .Include(h => h.Doctor)
+   .Include(h => h.Patient)
+   .Include(h => h.Position)
+   .Where(iin => iin.Patient.IIN.Contains(IIN))
+   .OrderByDescending(m => m.VisitDate);
+            }
+            else
+            {
+                if (id == null)
+                {
+                    Histories = _context.Histories
+                        .Include(h => h.Doctor)
+                        .Include(h => h.Patient)
+                        .Include(h => h.Position)
+                        .OrderByDescending(m => m.VisitDate);
+                }
+                else
+                {
+                    Histories = _context.Histories
+                       .Include(h => h.Doctor)
+                       .Include(h => h.Patient)
+                       .Include(h => h.Position)
+                       .Where(fio => fio.Patient.FIO.Contains(id))
+                       .OrderByDescending(m => m.VisitDate);
+                }
+            }
+            return PartialView(Histories);
+        }
+
+        // GET: Patients/Create
+        public IActionResult CreatePatient()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreatePatient([Bind("PatientId,IIN,FIO,Address,PhoneNumber")] Patient patient)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(patient);
+                await _context.SaveChangesAsync();
+                return PartialView("Success");
+            }
+            return View(patient);
         }
 
         public ActionResult GetItems(int id)

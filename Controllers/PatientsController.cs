@@ -60,7 +60,7 @@ namespace PatientCardsITC.Controllers
             {
                 _context.Add(patient);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return PartialView("Success");
             }
             return View(patient);
         }

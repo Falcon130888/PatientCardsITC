@@ -1,5 +1,6 @@
 ﻿using PatientCardsITC.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace PatientCardsITC.DBContext
 {
@@ -15,10 +16,20 @@ namespace PatientCardsITC.DBContext
             Database.EnsureCreated();
         }
 
+        protected override void OnModelCreating(ModelBuilder modelbuilder)
+        {
+            foreach (var relationship in modelbuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
+            base.OnModelCreating(modelbuilder);
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-                 //optionsBuilder.UseSqlServer("data source=STAS;initial catalog=PatientCards; Integrated Security=True");
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=PatientCards;Username=postgres;Password=2030");
+                 optionsBuilder.UseSqlServer("data source=STAS;initial catalog=PatientCards; Integrated Security=True");
+            //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=PatientCards;Username=postgres;Password=2030");
         }
     }
 }

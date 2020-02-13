@@ -5,9 +5,18 @@
 }
 
 <h1>Посещения</h1>
-
-<p> @Html.ActionLink("Добавить посещение", "Create", "Histories", new { }, new { @id = "add", data_dialog_title = "Новое посещение" })</p>
-
+<div style="float:left;">
+    @Html.ActionLink("Добавить посещение", "Create", "Histories", new { }, new { @id = "add", data_dialog_title = "Новое посещение" })|
+</div>
+<div style="float:left;">
+    @Html.ActionLink("Добавить пациента", "CreatePatient", "Histories", new { }, new { @id = "addPatient", data_dialog_title = "Новый пациент" })
+</div>
+<div style="float:left;">
+    @Html.TextBox("FIO", null, new { @placeholder = "Найти по ФИО пациента", @id = "FIO", @class = "form-control" })
+</div>
+<div style="float:left;">
+    @Html.TextBox("IIN", null, new { @placeholder = "Найти по ИИН", @id = "IIN", @class = "form-control" })
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -32,7 +41,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="histories">
         @foreach (var item in Model)
         {
             <tr>
@@ -81,7 +90,32 @@
             .load(this.href);
            });
 
-       $('#add').on('click', function(e) {
+       $('#addPatient').on('click', function(e) {
+            e.preventDefault();
+            $("<div id='dialogContent'></div>")
+                .addClass("dialog")
+                .appendTo("body")
+                .load(this.href)
+                .dialog({
+                    title: $(this).attr("data-dialog-title"),
+                    close: function () { $(this).remove() },
+                    modal: true,
+                    buttons: {
+                        "Выпонить": function () {
+                            $.ajax({
+                             url: "@Url.Action("CreatePatient", "Histories")",
+                             type: "POST",
+                             data: $('form').serialize(),
+                             datatype: "json",
+                             success: function (result) {
+                                 $("#dialogContent").html(result);
+                                }
+                            });
+                        }
+                    }
+                });
+       });
+              $('#add').on('click', function(e) {
             e.preventDefault();
             $("<div id='dialogContent'></div>")
                 .addClass("dialog")
@@ -107,21 +141,33 @@
                 });
        });
    });
-$(function () {
-// Заполняем таблицу должностей по IdOtdel
-    $('#positions').change(function()
-            {
+        $(function () {
+            $('#FIO').on('input', function () {
                 // получаем выбранный id
-                var id = $(this).val();
+                var text = $(this).val();
                 $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetItems")/' + id,
-                success: function (data) {
-                    // заменяем содержимое присланным частичным представлением
-                    $('#doctors').replaceWith(data);
-            }
+                    type: 'GET',
+                    url: '@Url.Action("GetHistories")/' + text,
+                    success: function (data) {
+                        // заменяем содержимое присланным частичным представлением
+                        $('#histories').replaceWith(data);
+                    }
+                });
+            });
         });
-    });
-})
+                    $(function () {
+            $('#IIN').on('input', function () {
+                // получаем выбранный id
+                var text = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetHistories")/?id=' + text + '&IIN='+ text,
+                    success: function (data) {
+                        // заменяем содержимое присланным частичным представлением
+                        $('#histories').replaceWith(data);
+                    }
+                });
+            });
+        });
     </script>
 }

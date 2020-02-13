@@ -25,15 +25,15 @@ namespace PatientCardsITC.Models
         [ForeignKey("DoctorId")]
         public Doctor Doctor { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "заполните диагноз")]
         [Display(Name = "Диагноз")]
         public string Diagnos { get; set; }
 
-        [Required]
-        [Display(Name = "Жалоба")]
+        [Required(ErrorMessage = "заполните жалобы")]
+        [Display(Name = "Жалобы")]
         public string Complain { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "заполните дату обращения")]
         [DataType(DataType.Date)]
         [Display(Name = "Дата визита")]
         public DateTime VisitDate { get; set; }

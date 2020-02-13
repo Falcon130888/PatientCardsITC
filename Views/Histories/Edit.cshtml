@@ -1,30 +1,28 @@
 ﻿@model PatientCardsITC.Models.History
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Изменить";
+    Layout = null;
 }
-
-<h1>Edit</h1>
-
-<h4>History</h4>
+<h4>Изменить</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div>
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="HistoryId" />
             <div class="form-group">
-                <label asp-for="PatientId" class="control-label"></label>
+                ФИО пациеинта
                 <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
                 <span asp-validation-for="PatientId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PositionId" class="control-label"></label>
+                Специализация врача
                 <select asp-for="PositionId" class="form-control" asp-items="ViewBag.PositionId"></select>
                 <span asp-validation-for="PositionId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DoctorId" class="control-label"></label>
+                ФИО врача
                 <select asp-for="DoctorId" class="form-control" asp-items="ViewBag.DoctorId"></select>
                 <span asp-validation-for="DoctorId" class="text-danger"></span>
             </div>

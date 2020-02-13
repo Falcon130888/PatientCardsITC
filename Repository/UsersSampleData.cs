@@ -65,7 +65,17 @@ namespace PatientCardsITC.Repository
                     {
                         FIO = "Айсин А.М.",
                         PositionId = 5
-                    }
+                    },
+                    new Doctor
+                    {
+                        FIO = "Коновалова Т.А.",
+                        PositionId = 1
+                    },
+                    new Doctor
+                        {
+                            FIO = "Иванов И.И.",
+                            PositionId = 1
+                        }
                 );
                 context.SaveChanges();
             }
@@ -100,7 +110,14 @@ namespace PatientCardsITC.Repository
                         FIO = "Скакова Улжан Каспаметовна",
                         Address = "Абая 25, кв 40",
                         PhoneNumber = "8(777)9784307",
-                    }
+                    },
+                    new Patient
+                     {
+                         IIN = "77777777777",
+                         FIO = "Сидоров Иван Иванович",
+                         Address = "Пушкина 10, кв 5",
+                         PhoneNumber = "8(777)9784307",
+                     }
                     );
                 context.SaveChanges();
             }
@@ -117,7 +134,7 @@ namespace PatientCardsITC.Repository
                        Complain = "температура",
                        VisitDate = DateTime.Now
                    },
-                    new History
+                   new History
                     {
                         PatientId = 2,
                         PositionId = 2,
@@ -126,7 +143,7 @@ namespace PatientCardsITC.Repository
                         Complain = "боль в животе",
                         VisitDate = DateTime.Now
                     },
-                    new History
+                   new History
                     {
                         PatientId = 3,
                         PositionId = 3,
@@ -134,7 +151,25 @@ namespace PatientCardsITC.Repository
                         Diagnos = "воспаление уха",
                         Complain = "боль в ухе",
                         VisitDate = DateTime.Now
-                    }
+                    },
+                   new History
+                   {
+                       PatientId = 1,
+                       PositionId = 1,
+                       DoctorId = 7,
+                       Diagnos = "бронхит",
+                       Complain = "кашель",
+                       VisitDate = DateTime.Now
+                   },
+                   new History
+                   {
+                       PatientId = 1,
+                       PositionId = 1,
+                       DoctorId = 6,
+                       Diagnos = "подозрение на гастрит",
+                       Complain = "боль в животе",
+                       VisitDate = DateTime.Now
+                   }
                     );
                 context.SaveChanges();
             }

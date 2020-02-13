@@ -1,0 +1,32 @@
+﻿@model IEnumerable<PatientCardsITC.Models.History>
+
+<tbody id="histories">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patient.FIO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position.PositionName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.FIO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagnos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Complain)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisitDate)
+            </td>
+            <td>
+                <a asp-action="Edit" class="viewDialog" asp-route-id="@item.HistoryId">Изменить</a> |
+                <a asp-action="Details" class="viewDialog" asp-route-id="@item.HistoryId">Детали</a> |
+                <a asp-action="Delete" class="viewDialog" asp-route-id="@item.HistoryId">Удалить</a>
+            </td>
+        </tr>
+    }
+</tbody>
